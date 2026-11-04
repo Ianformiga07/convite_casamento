@@ -48,6 +48,9 @@ Admin.pronto(async () => {
         <label class="interruptor"><input type="checkbox" name="lista_presentes_ativa" ${marcado("lista_presentes_ativa")}> Lista de presentes ativada</label>
         <label class="interruptor"><input type="checkbox" name="mostrar_valores" ${marcado("mostrar_valores")}> Mostrar valores estimados dos presentes</label>
       </div>
+      <label class="campo campo--inteiro"><span>WhatsApp dos noivos para dúvidas (opcional)</span>
+        <input name="contato_whatsapp" inputmode="tel" maxlength="16" value="${v("contato_whatsapp")}" placeholder="(63) 99999-9999">
+        <p class="dica">Aparece como botão “Falar com os noivos” no convite, para quem perdeu o link pessoal ou tem dúvidas. Deixe vazio para não mostrar.</p></label>
       <label class="campo campo--inteiro"><span>Mensagem padrão do WhatsApp ao enviar convites</span>
         <textarea name="whatsapp_texto" rows="3" maxlength="800">${v("whatsapp_texto")}</textarea>
         <p class="dica">Use {grupo}, {titular} e {link}: eles são trocados automaticamente pelos dados de cada convite.</p></label>
@@ -89,6 +92,9 @@ Admin.pronto(async () => {
     <p style="margin:1rem 0 0"><button class="btn btn--principal" type="submit">Alterar senha</button></p>
   </form>`;
 
+  const fFun = document.querySelector('[data-secao="funcoes"]');
+  fFun.contato_whatsapp.addEventListener("input", e => (e.target.value = U.mascaraTelefone(e.target.value)));
+
   // Recepção em outro local
   const fLocal = document.querySelector('[data-secao="local"]');
   const sincRecepcao = () => fLocal.querySelectorAll("[data-recepcao]").forEach(e => (e.hidden = fLocal.recepcao_mesmo_local.checked));
@@ -115,7 +121,9 @@ Admin.pronto(async () => {
     },
     funcoes: f => {
       if (!f.whatsapp_texto.value.includes("{link}")) throw new Error("A mensagem do WhatsApp precisa conter {link}.");
-      return { rsvp_prazo: f.rsvp_prazo.value, rsvp_ativo: f.rsvp_ativo.checked,
+      const contato = f.contato_whatsapp.value.trim();
+      if (contato && contato.replace(/\D/g, "").length < 10) throw new Error("WhatsApp dos noivos incompleto: informe com DDD.");
+      return { contato_whatsapp: contato, rsvp_prazo: f.rsvp_prazo.value, rsvp_ativo: f.rsvp_ativo.checked,
         lista_presentes_ativa: f.lista_presentes_ativa.checked, mostrar_valores: f.mostrar_valores.checked,
         whatsapp_texto: f.whatsapp_texto.value.trim() };
     },

@@ -51,16 +51,45 @@
   // ---------------- Menu ----------------
   function iniciarMenu() {
     const topo = $("#topo"), btn = $("#btn-menu");
-    btn.addEventListener("click", () => {
-      const aberto = topo.classList.toggle("menu-aberto");
+    const definir = aberto => {
+      topo.classList.toggle("menu-aberto", aberto);
+      document.body.classList.toggle("menu-aberto", aberto);
       btn.setAttribute("aria-expanded", aberto);
       btn.querySelector("i").className = aberto ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+      $("#btn-menu-texto").textContent = aberto ? "Fechar" : "Menu";
       document.body.style.overflow = aberto ? "hidden" : "";
-    });
-    $$("#menu a").forEach(a => a.addEventListener("click", () => {
-      if (topo.classList.contains("menu-aberto")) btn.click();
-    }));
-    window.addEventListener("scroll", () => topo.classList.toggle("rolou", scrollY > 40), { passive: true });
+    };
+    btn.addEventListener("click", () => definir(!topo.classList.contains("menu-aberto")));
+    $$("#menu a").forEach(a => a.addEventListener("click", () => definir(false)));
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && topo.classList.contains("menu-aberto")) definir(false); });
+    window.matchMedia("(min-width: 900px)").addEventListener("change", e => { if (e.matches) definir(false); });
+
+    // Borda do topo e barra de atalhos aparecem depois de sair da capa
+    const aoRolar = () => {
+      topo.classList.toggle("rolou", scrollY > 40);
+      document.body.classList.toggle("mostrar-atalhos", scrollY > innerHeight * 0.55);
+    };
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    aoRolar();
+  }
+
+  // Barra de atalhos: ajusta colunas e o texto do botão de confirmação
+  function atualizarAtalhos() {
+    const barra = $("#atalhos");
+    const visiveis = $$("a", barra).filter(a => !a.hidden).length;
+    barra.classList.toggle("atalhos--dois", visiveis === 2);
+    barra.hidden = visiveis < 2;
+    const r = estado.convite?.resposta;
+    $("#atalho-rsvp-texto").textContent = r ? "Minha confirmação" : "Confirmar presença";
+  }
+
+  // Link de WhatsApp dos noivos (configurado no painel)
+  function linkContato() {
+    const tel = String(estado.config.contato_whatsapp || "").replace(/\D/g, "");
+    if (tel.length < 10) return "";
+    const numero = tel.length <= 11 ? "55" + tel : tel;
+    const texto = `Olá! Tenho uma dúvida sobre o casamento de ${estado.config.nomes_curtos || "Ian & Laura Regina"}.`;
+    return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
   }
 
   // ---------------- Animação ao rolar ----------------
@@ -284,7 +313,7 @@
           <div class="presente__acoes">
             ${reservado
               ? `<p class="presente__por">Escolhido por <strong>${esc(p.reservado_por)}</strong></p>`
-              : `<button type="button" class="botao botao--principal" data-reservar="${esc(p.id)}">Escolher este presente</button>`}
+              : `<button type="button" class="botao botao--principal" data-reservar="${esc(p.id)}" aria-label="Escolher ${esc(p.nome)}"><i class="fa-solid fa-gift" aria-hidden="true"></i> Escolher<span class="so-desktop"> este presente</span></button>`}
             ${loja && !reservado ? `<a class="presente__loja" href="${esc(loja)}" target="_blank" rel="noopener">Ver na loja</a>` : ""}
           </div>
         </div>
@@ -387,21 +416,31 @@
     const c = estado.convite;
 
     if (!estado.codigo || !c) {
+      const contato = linkContato();
+      const invalido = !!estado.codigo;
       area.innerHTML = `
         <div class="rsvp__resumo">
-          <p class="icone-grande"><i class="fa-regular fa-envelope"></i></p>
-          <p>${estado.codigo
-            ? "Não encontramos o convite deste link. Confira se o link foi copiado por completo."
-            : "A confirmação é feita pelo link pessoal que você recebeu dos noivos pelo WhatsApp."}</p>
-          <p class="rsvp__info">Se preferir, digite o código do seu convite:</p>
-          <form class="rsvp__codigo" id="form-codigo">
-            <input type="text" id="campo-codigo" placeholder="Código do convite" aria-label="Código do convite" autocomplete="off" required>
-            <button class="botao botao--principal" type="submit">Abrir</button>
-          </form>
+          <p class="icone-grande"><i class="fa-regular fa-envelope" aria-hidden="true"></i></p>
+          <h3>${invalido ? "Link não reconhecido" : "Use seu link pessoal"}</h3>
+          <p>${invalido
+            ? "Não encontramos o convite deste link. Ele pode ter sido copiado pela metade. Abra de novo o link que os noivos enviaram pelo WhatsApp."
+            : "Cada família recebeu dos noivos, pelo WhatsApp, um link só seu para confirmar presença. Abra o convite por esse link e esta área mostrará o formulário com o seu nome."}</p>
+          ${contato ? `<a class="botao botao--principal" href="${esc(contato)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Pedir meu link aos noivos</a>` : ""}
+          <details class="rsvp__ajuda">
+            <summary>Tenho o código do convite</summary>
+            <p>O código é a parte final do link, depois de <strong>?c=</strong></p>
+            <form class="rsvp__codigo" id="form-codigo">
+              <input type="text" id="campo-codigo" placeholder="Ex.: K7m2Qx9pLaBc4dEf" aria-label="Código do convite"
+                autocomplete="off" autocapitalize="off" spellcheck="false" required>
+              <button class="botao botao--principal" type="submit">Abrir</button>
+            </form>
+          </details>
         </div>`;
       $("#form-codigo").addEventListener("submit", e => {
         e.preventDefault();
-        const v = $("#campo-codigo").value.trim();
+        let v = $("#campo-codigo").value.trim();
+        const m = v.match(/[?&]c=([A-Za-z0-9_-]+)/); if (m) v = m[1];   // aceita o link inteiro colado
+        if (!/^[A-Za-z0-9_-]{8,40}$/.test(v)) { U.toast("Código inválido. Confira e tente de novo."); return; }
         const u = new URL(location.href); u.searchParams.set("c", v); u.hash = "rsvp";
         location.href = u.href;
       });
@@ -527,6 +566,7 @@
       estado.editandoRsvp = false;
       estado.convite = await carregarConvite();
       renderRsvp();
+      atualizarAtalhos();
       $("#rsvp").scrollIntoView({ behavior: "smooth" });
     });
   }
@@ -569,7 +609,12 @@
       try { localStorage.removeItem("convite_codigo"); } catch {}
     }
 
+    const contato = linkContato();
+    $$("[data-contato]").forEach(a => (a.href = contato));
+    $("#contato-faq").hidden = !contato;
+
     renderRsvp();
+    atualizarAtalhos();
     observarRevelar();
     if (estado.config.lista_presentes_ativa !== false) carregarPresentes();
 

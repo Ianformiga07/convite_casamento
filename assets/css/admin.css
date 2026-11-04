@@ -233,3 +233,17 @@ table.tabela { width: 100%; border-collapse: collapse; font-size: .9rem; }
   .segmentado { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
   .segmentado button { flex: 0 0 auto; }
 }
+
+/* ---------- Celular: sem zoom automático do iPhone e toques mais fáceis ---------- */
+a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+@media (max-width: 760px) {
+  .campo input:not([type=checkbox]):not([type=color]), .campo select, .campo textarea,
+  .ferramentas .busca input, .login__cartao input { font-size: 16px; min-height: 46px; }
+  .btn { min-height: 44px; }
+  .btn--pequeno { min-height: 40px; }
+  .barra-topo h1 { font-size: 1.7rem; }
+  /* Janelas sobem de baixo, ocupando a largura */
+  .janela { width: 100%; max-width: 100%; margin: auto 0 0; max-height: 94dvh; border-radius: 16px 16px 0 0; }
+  .janela__rodape .btn { flex: 1; }
+  .indicador strong { font-size: 1.8rem; }
+}

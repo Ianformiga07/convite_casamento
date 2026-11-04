@@ -21,6 +21,7 @@
   --texto: "Questrial", "Helvetica Neue", Arial, sans-serif;
 
   --medida: 34rem;
+  --altura-topo: 60px;
   --raio: 3px;
   --sombra: 0 18px 40px -24px rgba(62, 79, 34, .35);
 }
@@ -113,34 +114,69 @@ body.aberto .abertura__cartao { transform: translateY(-2rem) scale(.97); transit
 @keyframes tinta { from { opacity: 0; filter: blur(6px); transform: scale(.96); } to { opacity: 1; filter: none; transform: none; } }
 @keyframes ramo { from { opacity: 0; translate: -10px -10px; } to { opacity: 1; translate: 0 0; } }
 
-/* ---------- Topo ---------- */
+/* ---------- Topo e menu (celular primeiro) ---------- */
 .topo {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
   display: flex; align-items: center; justify-content: space-between;
-  padding: .55rem 1rem; padding-top: max(.55rem, env(safe-area-inset-top));
-  background: rgba(251, 248, 243, .9);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  height: calc(var(--altura-topo) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 1rem 0;
+  background: rgba(251, 248, 243, .94);
   border-bottom: 1px solid transparent;
   transform: translateY(-100%); transition: transform .5s ease, border-color .3s;
 }
 body.aberto .topo { transform: none; }
 .topo.rolou { border-bottom-color: var(--filete); }
-.topo__marca img { width: 46px; height: auto; }
-.topo__abrir { width: 48px; height: 48px; border: 0; background: none; color: var(--oliva); font-size: 1.25rem; cursor: pointer; }
-.topo__menu {
-  position: fixed; inset: 0; top: 0; z-index: -1;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem;
-  background: var(--papel);
-  opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s;
+.topo__marca, .topo__abrir { position: relative; z-index: 2; }
+.topo__marca { display: block; padding: .25rem 0; }
+.topo__marca img { width: 44px; height: auto; }
+.topo__abrir {
+  display: inline-flex; align-items: center; justify-content: center; gap: .45rem;
+  min-width: 48px; height: 44px; padding: 0 .9rem; margin-right: -.5rem;
+  border: 0; border-radius: 999px; background: none;
+  font: inherit; font-size: .9rem; color: var(--oliva); cursor: pointer;
 }
-.topo__menu a { font-family: var(--serifa); font-size: 1.7rem; color: var(--tinta); text-decoration: none; }
-.topo__menu a:hover { color: var(--terracota); }
-.topo.menu-aberto .topo__menu { opacity: 1; visibility: visible; }
+.topo__abrir i { font-size: 1.15rem; }
+
+/* Menu do celular: tela cheia */
+.topo__menu {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  top: calc(var(--altura-topo) + env(safe-area-inset-top));
+  z-index: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 1rem 1.5rem calc(2rem + env(safe-area-inset-bottom));
+  background: var(--papel) url("../images/papel.jpg") repeat; background-size: 640px;
+  overflow-y: auto; overscroll-behavior: contain;
+  opacity: 0; visibility: hidden; transform: translateY(-.5rem);
+  transition: opacity .3s ease, transform .3s ease, visibility .3s;
+}
+.topo.menu-aberto { border-bottom-color: var(--filete); }
+.topo.menu-aberto .topo__menu { opacity: 1; visibility: visible; transform: none; }
+.topo__menu a {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 60px; padding: .5rem .25rem;
+  font-family: var(--serifa); font-size: 1.6rem; color: var(--tinta); text-decoration: none;
+  border-bottom: 1px solid var(--filete);
+}
+.topo__menu a::after { content: "\203A"; font-family: var(--texto); font-size: 1.4rem; color: var(--terracota); }
+.topo__menu a:active, .topo__menu a:hover { color: var(--terracota); }
+.topo__menu a[data-secao="rsvp"] {
+  justify-content: center; margin-top: 1.5rem; border: 0; border-radius: 999px;
+  background: var(--oliva); color: var(--papel); font-family: var(--texto); font-size: 1rem; min-height: 52px;
+}
+.topo__menu a[data-secao="rsvp"]::after { content: none; }
+/* Sem a etapa de transformação, o painel fixo passa a ocupar a tela toda */
+.topo.menu-aberto { transform: none; }
+
 @media (min-width: 900px) {
-  .topo { padding-inline: 2.5rem; }
+  .topo { padding-inline: 2.5rem; background: rgba(251, 248, 243, .9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   .topo__abrir { display: none; }
-  .topo__menu { position: static; z-index: auto; flex-direction: row; gap: 2rem; background: none; opacity: 1; visibility: visible; }
-  .topo__menu a { font-family: var(--texto); font-size: .92rem; letter-spacing: .03em; color: var(--tinta-suave); }
+  .topo__menu {
+    position: static; flex-direction: row; align-items: center; gap: 2rem; padding: 0;
+    background: none; overflow: visible; opacity: 1; visibility: visible; transform: none;
+  }
+  .topo__menu a { min-height: 44px; padding: 0; border: 0; font-family: var(--texto); font-size: .92rem; letter-spacing: .03em; color: var(--tinta-suave); }
+  .topo__menu a::after { content: none; }
+  .topo__menu a[data-secao="rsvp"] { margin: 0; padding: 0 1.2rem; min-height: 40px; font-size: .9rem; }
 }
 
 /* ---------- Início ---------- */
@@ -158,7 +194,8 @@ body.aberto .topo { transform: none; }
 .inicio__local { font-size: .95rem; color: var(--tinta-suave); margin: .4rem 0 0; }
 
 /* ---------- Seções ---------- */
-.secao { padding: 5rem 1.25rem; scroll-margin-top: 3.5rem; }
+.secao { padding: 4rem 1.25rem; scroll-margin-top: calc(var(--altura-topo) + env(safe-area-inset-top)); }
+@media (min-width: 760px) { .secao { padding-block: 5.5rem; } }
 .secao--areia { background: rgba(242, 235, 223, .7); }
 .secao__cabeca { text-align: center; max-width: var(--medida); margin: 0 auto 2.75rem; }
 .titulo {
@@ -416,7 +453,7 @@ body.aberto .topo { transform: none; }
 /* Presentes no celular: card horizontal e compacto */
 @media (max-width: 559px) {
   .presentes { gap: .85rem; }
-  .presente { display: grid; grid-template-columns: 6.5rem 1fr; gap: .25rem; padding: .5rem; }
+  .presente { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .25rem; padding: .5rem; }
   .presente:hover { transform: none; }
   .presente__imagem { aspect-ratio: auto; min-height: 6.5rem; height: 100%; }
   .presente__sem-foto { font-size: 1.6rem; }
@@ -427,3 +464,115 @@ body.aberto .topo { transform: none; }
   .presente__acoes { padding-top: .7rem; gap: .25rem .75rem; }
   .presente__acoes .botao { flex: 0 1 auto; min-height: 42px; padding-inline: 1rem; font-size: .86rem; }
 }
+
+/* =====================================================================
+   AJUSTES CELULAR PRIMEIRO
+   ===================================================================== */
+
+/* ---------- Barra de atalhos no rodapé (só celular) ---------- */
+.atalhos {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 25;
+  display: grid; grid-template-columns: 1fr 1fr 1.6fr; gap: .4rem;
+  padding: .5rem .6rem calc(.5rem + env(safe-area-inset-bottom));
+  background: rgba(251, 248, 243, .97);
+  border-top: 1px solid var(--filete);
+  box-shadow: 0 -10px 30px -20px rgba(62, 79, 34, .4);
+  transform: translateY(110%); transition: transform .35s ease;
+}
+body.mostrar-atalhos .atalhos { transform: none; }
+body.menu-aberto .atalhos { transform: translateY(110%); }
+.atalhos a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .15rem;
+  min-height: 52px; border-radius: 14px;
+  font-size: .78rem; line-height: 1.1; color: var(--oliva); text-decoration: none; text-align: center;
+}
+.atalhos a i { font-size: 1.1rem; }
+.atalhos a:active { background: rgba(85, 107, 47, .08); }
+.atalhos .atalhos__principal { flex-direction: row; gap: .5rem; background: var(--oliva); color: var(--papel); font-size: .9rem; padding: 0 .5rem; }
+.atalhos .atalhos__principal:active { background: var(--oliva-escuro); }
+.atalhos.atalhos--dois { grid-template-columns: 1fr 1.6fr; }
+body.aberto { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
+.aviso-flutuante { bottom: calc(84px + env(safe-area-inset-bottom)); }
+@media (min-width: 900px) {
+  .atalhos { display: none; }
+  body.aberto { padding-bottom: 0; }
+  .aviso-flutuante { bottom: 1.5rem; }
+}
+
+/* ---------- Abertura em telas pequenas ---------- */
+.abertura { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.abertura__cartao { margin: auto; }
+@media (max-height: 720px) {
+  .abertura__moldura { padding: 2rem 1.25rem 1.75rem; }
+  .abertura__monograma { width: 48%; margin-bottom: 1rem; }
+  .abertura__nomes { font-size: clamp(2.1rem, 10vw, 2.7rem); margin-bottom: .6rem; }
+  .abertura__frase { font-size: 1.05rem; margin-bottom: .9rem; }
+  .abertura__data { margin-bottom: 1.25rem; }
+}
+@media (max-width: 359px) {
+  .abertura { padding: 1rem .75rem; }
+  .abertura__moldura { padding-inline: 1rem; }
+}
+
+/* ---------- Início ---------- */
+.inicio { min-height: calc(100svh - env(safe-area-inset-bottom)); padding: calc(var(--altura-topo) + 2rem) 1.5rem 3rem; }
+
+/* ---------- O grande dia: botões ocupam a largura no celular ---------- */
+.agenda { flex-direction: column; align-items: stretch; max-width: 24rem; margin-inline: auto; }
+.local .botao { width: 100%; max-width: 20rem; }
+@media (min-width: 560px) { .agenda { flex-direction: row; justify-content: center; max-width: none; } }
+
+/* ---------- RSVP sem link pessoal ---------- */
+.rsvp .rsvp__codigo .botao { width: auto; margin: 0; flex: 0 0 auto; padding-inline: 1.4rem; }
+.rsvp__ajuda { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--filete); text-align: left; }
+.rsvp__ajuda summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  min-height: 48px; cursor: pointer; list-style: none; color: var(--oliva); font-size: .95rem;
+}
+.rsvp__ajuda summary::-webkit-details-marker { display: none; }
+.rsvp__ajuda summary::after { content: "+"; font-size: 1.3rem; color: var(--terracota); transition: transform .3s; }
+.rsvp__ajuda[open] summary::after { transform: rotate(45deg); }
+.rsvp__ajuda p { margin: .25rem 0 .75rem; font-size: .9rem; color: var(--tinta-suave); }
+.rsvp__codigo input { font-size: 1rem; letter-spacing: .04em; }
+.rsvp__resumo .botao { width: 100%; max-width: 20rem; }
+.contato { max-width: 42rem; margin: 2rem auto 0; display: flex; flex-direction: column; align-items: center; gap: .75rem; text-align: center; color: var(--tinta-suave); }
+
+/* ---------- Janelas: sobem de baixo no celular ---------- */
+@media (max-width: 559px) {
+  .janela {
+    width: 100%; max-width: 100%; margin: auto 0 0; max-height: 92dvh; overflow-y: auto;
+    border-radius: 18px 18px 0 0; padding-bottom: env(safe-area-inset-bottom);
+  }
+  .janela[open] { animation: subir .35s cubic-bezier(.2, .7, .2, 1); }
+  .janela__corpo { margin: .5rem .5rem 0; padding: 2rem 1.1rem 1.25rem; }
+  .janela__corpo::before { content: ""; position: absolute; top: .6rem; left: 50%; translate: -50% 0; width: 40px; height: 4px; border-radius: 4px; background: var(--bege); }
+}
+@keyframes subir { from { transform: translateY(100%); } to { transform: none; } }
+
+/* ---------- Toques: sem atraso e sem destaque azul ---------- */
+a, button, label, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+input, textarea, select { font-size: max(16px, 1rem); } /* evita o zoom automático do iPhone */
+
+/* Topo opaco no celular (sem o texto aparecendo por trás) */
+.topo { background: var(--papel); }
+@media (min-width: 900px) { .topo { background: rgba(251, 248, 243, .9); } }
+/* No menu do celular, o botão de confirmar fica sempre por último */
+@media (max-width: 899px) { .topo__menu a[data-secao="rsvp"] { order: 10; } }
+@media (max-width: 379px) {
+  .rsvp { padding: 1.75rem 1rem; outline-offset: -5px; }
+  .rsvp__resumo .botao { font-size: .9rem; padding-inline: 1rem; }
+  .atalhos .atalhos__principal { font-size: .82rem; }
+}
+.so-desktop { display: none; }
+@media (min-width: 560px) { .so-desktop { display: inline; } }
+.agenda .botao { font-size: .9rem; padding-inline: 1.1rem; }
+@media (max-width: 559px) {
+  .presente__acoes { justify-content: flex-start; }
+  .presente__acoes .botao { flex: 0 0 auto; }
+  .presente__loja { white-space: nowrap; }
+  .presente__nome { overflow-wrap: break-word; }
+  .presente__cat { font-size: .74rem; }
+}
+
+/* Rede de segurança: nada pode empurrar a página para os lados */
+main, .rodape { overflow-x: clip; }

@@ -55,7 +55,7 @@
     <a href="#informacoes">Informações</a>
   </nav>
   <button class="topo__abrir" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu">
-    <span class="sr">Abrir menu</span><i class="fa-solid fa-bars" aria-hidden="true"></i>
+    <span id="btn-menu-texto">Menu</span><i class="fa-solid fa-bars" aria-hidden="true"></i>
   </button>
 </header>
 
@@ -129,10 +129,10 @@
 
     <div class="agenda revelar">
       <a class="botao botao--linha" id="btn-google-agenda" target="_blank" rel="noopener">
-        <i class="fa-brands fa-google" aria-hidden="true"></i> Adicionar ao Google Agenda
+        <i class="fa-brands fa-google" aria-hidden="true"></i> Salvar no Google Agenda
       </a>
       <button class="botao botao--linha" id="btn-ics" type="button">
-        <i class="fa-regular fa-calendar-plus" aria-hidden="true"></i> Salvar na agenda do celular
+        <i class="fa-regular fa-calendar-plus" aria-hidden="true"></i> Salvar no celular
       </button>
     </div>
   </section>
@@ -192,6 +192,8 @@
       <h2 class="titulo">Informações importantes</h2>
     </div>
     <div class="faq" id="faq"></div>
+    <p class="contato" id="contato-faq" hidden>Ainda com dúvidas?
+      <a class="botao botao--linha" target="_blank" rel="noopener" data-contato><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Falar com os noivos</a></p>
   </section>
 
   <!-- ============ FINAL ============ -->
@@ -209,6 +211,13 @@
   <p class="js-data-curta">26.06.2027</p>
   <ul class="rodape__links" id="rodape-links"></ul>
 </footer>
+
+<!-- ============ ATALHOS (celular) ============ -->
+<nav class="atalhos" id="atalhos" aria-label="Atalhos">
+  <a href="#presentes" data-secao="presentes"><i class="fa-solid fa-gift" aria-hidden="true"></i><span>Presentes</span></a>
+  <a href="#grande-dia"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Local</span></a>
+  <a href="#rsvp" data-secao="rsvp" class="atalhos__principal"><i class="fa-solid fa-heart" aria-hidden="true"></i><span id="atalho-rsvp-texto">Confirmar presença</span></a>
+</nav>
 
 <!-- ============ JANELA DE RESERVA ============ -->
 <dialog class="janela" id="janela-reserva" aria-labelledby="reserva-titulo">
