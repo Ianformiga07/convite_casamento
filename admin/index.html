@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Entrar · Painel Ian & Laura Regina</title>
+  <link rel="icon" href="../assets/images/favicon.png">
+  <link rel="stylesheet" href="../assets/css/fontes.css">
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+<main class="login">
+  <form class="login__cartao" id="form-login" novalidate>
+    <img src="../assets/images/monograma.webp" alt="Monograma I & L" width="1280" height="1063">
+    <h1>Painel do casamento</h1>
+    <p>Área restrita aos noivos</p>
+    <p class="erro" id="erro" role="alert" hidden></p>
+    <label class="campo"><span>E-mail</span>
+      <input type="email" name="email" required autocomplete="username"></label>
+    <label class="campo"><span>Senha</span>
+      <input type="password" name="senha" required autocomplete="current-password"></label>
+    <button class="btn btn--principal" type="submit" id="btn-entrar">Entrar</button>
+    <button class="login__esqueci" type="button" id="btn-esqueci">Esqueci minha senha</button>
+  </form>
+</main>
+<div class="aviso-flutuante" id="toast" role="status" hidden></div>
+
+<script src="../assets/vendor/supabase.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/comum.js"></script>
+<script src="../assets/js/admin/login.js"></script>
+</body>
+</html>

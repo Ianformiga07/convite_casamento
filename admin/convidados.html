@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Convidados · Painel Ian & Laura Regina</title>
+  <link rel="icon" href="../assets/images/favicon.png">
+  <link rel="stylesheet" href="../assets/css/fontes.css">
+  <link rel="stylesheet" href="../assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body hidden>
+<div class="painel" data-pagina="convidados">
+  <main class="principal">
+    <div class="barra-topo">
+      <h1>Convidados</h1>
+      <div class="acoes">
+        <button class="btn" type="button" id="btn-importar"><i class="fa-solid fa-paste"></i> Importar lista</button>
+        <button class="btn" type="button" id="btn-excel"><i class="fa-regular fa-file-excel"></i> Excel</button>
+        <button class="btn" type="button" id="btn-pdf"><i class="fa-regular fa-file-pdf"></i> PDF</button>
+        <button class="btn btn--principal" type="button" id="btn-novo"><i class="fa-solid fa-plus"></i> Novo convite</button>
+      </div>
+    </div>
+    <div class="ferramentas">
+      <label class="busca"><i class="fa-solid fa-magnifying-glass"></i><span class="sr">Pesquisar</span>
+        <input type="search" id="busca" placeholder="Pesquisar por nome, família ou telefone"></label>
+      <div class="segmentado" id="filtro" role="group" aria-label="Filtrar por situação"></div>
+    </div>
+    <div class="tabela-wrap" id="tabela"></div>
+  </main>
+</div>
+<script src="../assets/vendor/supabase.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/comum.js"></script>
+<script src="../assets/vendor/xlsx.full.min.js"></script>
+<script src="../assets/vendor/jspdf.umd.min.js"></script>
+<script src="../assets/vendor/jspdf.plugin.autotable.min.js"></script>
+<script src="../assets/js/admin/base.js"></script>
+<script src="../assets/js/admin/convidados.js"></script>
+</body>
+</html>

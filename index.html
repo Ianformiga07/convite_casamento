@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ian & Laura Regina · 26 de junho de 2027</title>
+  <meta name="description" content="Convite de casamento de Ian Leandro e Laura Regina — 26 de junho de 2027, Chácara Luar do Lago Eventos, Palmas-TO.">
+  <meta name="theme-color" content="#FBF8F3">
+
+  <!-- Prévia do link no WhatsApp -->
+  <meta property="og:title" content="Ian & Laura Regina">
+  <meta property="og:description" content="Você é nosso convidado! 26 de junho de 2027 · Palmas-TO">
+  <meta property="og:image" content="assets/images/og-image.jpg">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/favicon.png">
+  <link rel="preload" as="image" href="assets/images/monograma.webp">
+
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/great-vibes-latin-400-normal.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/cormorant-garamond-latin-400-normal.woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fontes.css">
+  <link rel="stylesheet" href="assets/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="fechado">
+
+<!-- ============ ABERTURA ============ -->
+<div class="abertura" id="abertura" role="dialog" aria-modal="true" aria-labelledby="abertura-nomes">
+  <div class="abertura__cartao">
+    <img class="abertura__ramo abertura__ramo--a" src="assets/images/ramo2.webp" alt="" aria-hidden="true">
+    <img class="abertura__ramo abertura__ramo--b" src="assets/images/ramo1.webp" alt="" aria-hidden="true">
+    <div class="abertura__moldura">
+      <img class="abertura__monograma js-monograma" src="assets/images/monograma.webp" alt="Monograma I & L" width="1280" height="1063">
+      <p class="abertura__saudacao" id="abertura-saudacao" hidden></p>
+      <h1 class="abertura__nomes" id="abertura-nomes"><span class="js-noivo">Ian</span> <span class="e">&</span> <span class="js-noiva">Laura Regina</span></h1>
+      <p class="abertura__frase js-frase">Com a bênção de Deus e de nossas famílias, temos a alegria de convidar você para celebrar o nosso amor.</p>
+      <p class="abertura__data js-data-extenso">26 de junho de 2027</p>
+      <button class="botao botao--principal" id="btn-abrir" type="button">Abrir convite</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAVEGAÇÃO ============ -->
+<header class="topo" id="topo">
+  <a href="#inicio" class="topo__marca" aria-label="Início">
+    <img class="js-logo" src="assets/images/monograma.webp" alt="" width="1280" height="1063">
+  </a>
+  <nav class="topo__menu" id="menu" aria-label="Seções do convite">
+    <a href="#historia">Nossa história</a>
+    <a href="#grande-dia">O grande dia</a>
+    <a href="#programacao">Programação</a>
+    <a href="#presentes" data-secao="presentes">Presentes</a>
+    <a href="#rsvp" data-secao="rsvp">Confirmar presença</a>
+    <a href="#informacoes">Informações</a>
+  </nav>
+  <button class="topo__abrir" id="btn-menu" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="sr">Abrir menu</span><i class="fa-solid fa-bars" aria-hidden="true"></i>
+  </button>
+</header>
+
+<main id="conteudo">
+
+  <!-- ============ INÍCIO ============ -->
+  <section class="inicio" id="inicio">
+    <img class="inicio__ramo" src="assets/images/ramo2.webp" alt="" aria-hidden="true">
+    <img class="inicio__monograma js-monograma" src="assets/images/monograma.webp" alt="Monograma I & L" width="1280" height="1063">
+    <p class="inicio__nomes"><span class="js-noivo-completo">Ian Leandro</span><br><span class="e">&</span><br><span class="js-noiva">Laura Regina</span></p>
+    <p class="inicio__data js-data-extenso">26 de junho de 2027</p>
+    <p class="inicio__local js-local-nome">Chácara Luar do Lago Eventos</p>
+  </section>
+
+  <!-- ============ NOSSA HISTÓRIA ============ -->
+  <section class="secao" id="historia">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">Nossa história</h2>
+      <p class="subtitulo-script js-historia-titulo">Juntos desde 2015</p>
+    </div>
+    <figure class="historia__foto revelar" id="historia-foto" hidden>
+      <img alt="Ian e Laura Regina" loading="lazy">
+    </figure>
+    <p class="texto-centro revelar js-historia-texto"></p>
+    <ol class="linha-tempo" id="linha-tempo"></ol>
+  </section>
+
+  <div class="divisor" aria-hidden="true"><img src="assets/images/ramo1.webp" alt=""></div>
+
+  <!-- ============ O GRANDE DIA ============ -->
+  <section class="secao secao--areia" id="grande-dia">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">O grande dia</h2>
+    </div>
+
+    <div class="grande-dia revelar">
+      <p class="grande-dia__semana js-dia-semana">Sábado</p>
+      <p class="grande-dia__numero js-dia">26</p>
+      <p class="grande-dia__mes js-mes-ano">junho de 2027</p>
+      <p class="grande-dia__hora">às <span class="js-hora">16:30</span></p>
+    </div>
+
+    <div class="contagem revelar" id="contagem" aria-live="off">
+      <div><span id="cd-dias">--</span><small>dias</small></div>
+      <div><span id="cd-horas">--</span><small>horas</small></div>
+      <div><span id="cd-min">--</span><small>minutos</small></div>
+      <div><span id="cd-seg">--</span><small>segundos</small></div>
+    </div>
+    <p class="contagem__fim" id="contagem-fim" hidden>Hoje é o grande dia!</p>
+
+    <div class="locais">
+      <article class="local revelar">
+        <h3 class="local__tipo" id="local-tipo">Cerimônia e recepção</h3>
+        <p class="local__nome js-local-nome">Chácara Luar do Lago Eventos</p>
+        <p class="local__end js-local-endereco">Palmas – TO, 77002-000</p>
+        <a class="botao botao--principal" id="btn-mapa" target="_blank" rel="noopener">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Como chegar
+        </a>
+      </article>
+      <article class="local revelar" id="local-recepcao" hidden>
+        <h3 class="local__tipo">Recepção</h3>
+        <p class="local__nome" id="recepcao-nome"></p>
+        <p class="local__end" id="recepcao-end"></p>
+        <a class="botao botao--principal" id="btn-mapa-recepcao" target="_blank" rel="noopener">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i> Como chegar
+        </a>
+      </article>
+    </div>
+
+    <p class="aviso revelar js-aviso-chegada"></p>
+
+    <div class="agenda revelar">
+      <a class="botao botao--linha" id="btn-google-agenda" target="_blank" rel="noopener">
+        <i class="fa-brands fa-google" aria-hidden="true"></i> Adicionar ao Google Agenda
+      </a>
+      <button class="botao botao--linha" id="btn-ics" type="button">
+        <i class="fa-regular fa-calendar-plus" aria-hidden="true"></i> Salvar na agenda do celular
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMAÇÃO ============ -->
+  <section class="secao" id="programacao">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">Programação</h2>
+    </div>
+    <ol class="programa" id="programa"></ol>
+  </section>
+
+  <div class="divisor" aria-hidden="true"><img src="assets/images/ramo1.webp" alt=""></div>
+
+  <!-- ============ PRESENTES ============ -->
+  <section class="secao secao--areia" id="presentes">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">Lista de presentes</h2>
+      <p class="texto-centro js-presentes-texto"></p>
+    </div>
+
+    <div class="filtros" role="search">
+      <label class="busca">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <span class="sr">Pesquisar presente</span>
+        <input type="search" id="busca-presente" placeholder="Pesquisar presente" autocomplete="off">
+      </label>
+      <div class="chips" id="chips-categorias" role="group" aria-label="Categorias"></div>
+      <label class="alternar">
+        <input type="checkbox" id="so-disponiveis">
+        <span>Mostrar só os disponíveis</span>
+      </label>
+    </div>
+
+    <p class="contador-presentes" id="contador-presentes" aria-live="polite"></p>
+    <div class="presentes" id="lista-presentes">
+      <p class="carregando">Carregando presentes…</p>
+    </div>
+    <p class="vazio" id="presentes-vazio" hidden>Nenhum presente encontrado com esses filtros.</p>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="secao" id="rsvp">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">Confirme sua presença</h2>
+      <p class="texto-centro js-rsvp-texto"></p>
+      <p class="prazo">Confirme até <strong class="js-rsvp-prazo">26 de março de 2027</strong></p>
+    </div>
+    <div class="rsvp" id="rsvp-area">
+      <p class="carregando">Carregando…</p>
+    </div>
+  </section>
+
+  <!-- ============ INFORMAÇÕES ============ -->
+  <section class="secao secao--areia" id="informacoes">
+    <div class="secao__cabeca revelar">
+      <h2 class="titulo">Informações importantes</h2>
+    </div>
+    <div class="faq" id="faq"></div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="final" id="final">
+    <img class="final__ramo final__ramo--a" src="assets/images/ramo2.webp" alt="" aria-hidden="true">
+    <p class="final__titulo js-final-titulo revelar">Obrigado</p>
+    <p class="final__texto js-final-texto revelar">Estamos felizes por ter vocês ao nosso lado nesse dia tão especial.</p>
+    <img class="final__monograma js-monograma revelar" src="assets/images/monograma.webp" alt="Monograma I & L" loading="lazy" width="1280" height="1063">
+    <p class="final__assinatura js-assinatura revelar">Com amor, Ian Leandro e Laura Regina</p>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p class="js-nomes-curtos">Ian & Laura Regina</p>
+  <p class="js-data-curta">26.06.2027</p>
+  <ul class="rodape__links" id="rodape-links"></ul>
+</footer>
+
+<!-- ============ JANELA DE RESERVA ============ -->
+<dialog class="janela" id="janela-reserva" aria-labelledby="reserva-titulo">
+  <form method="dialog" class="janela__corpo" id="form-reserva" novalidate>
+    <button class="janela__fechar" type="button" data-fechar aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    <p class="janela__icone" aria-hidden="true"><i class="fa-solid fa-gift"></i></p>
+    <h3 id="reserva-titulo">Escolher este presente?</h3>
+    <p class="janela__presente" id="reserva-nome"></p>
+    <label class="campo">
+      <span>Seu nome (como aparecerá para os outros convidados)</span>
+      <input type="text" id="reserva-quem" maxlength="80" required autocomplete="name" placeholder="Ex.: Maria e João">
+    </label>
+    <p class="janela__nota">Depois de confirmar, o presente fica reservado no seu nome e não poderá ser escolhido por outra pessoa.</p>
+    <p class="erro" id="reserva-erro" role="alert" hidden></p>
+    <div class="janela__acoes">
+      <button class="botao botao--linha" type="button" data-fechar>Voltar</button>
+      <button class="botao botao--principal" type="submit" id="reserva-confirmar">Confirmar</button>
+    </div>
+  </form>
+  <div class="janela__corpo" id="reserva-sucesso" hidden>
+    <p class="janela__icone janela__icone--ok" aria-hidden="true"><i class="fa-solid fa-heart"></i></p>
+    <h3>Presente reservado!</h3>
+    <p id="reserva-sucesso-texto"></p>
+    <p class="janela__nota" id="reserva-link-loja"></p>
+    <div class="janela__acoes">
+      <button class="botao botao--principal" type="button" data-fechar>Fechar</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="aviso-flutuante" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="assets/vendor/supabase.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/comum.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
